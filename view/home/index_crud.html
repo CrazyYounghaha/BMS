@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>信息管理系统界面</title>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css"/>
+    <script language="JavaScript" src="/static/js/jquery.js"></script>
+    <script type="text/javascript" src="/static/js/scrolling.js"></script>
+</head>
+<body>
+
+<div style="background:url(/static/img/topbg.gif) repeat-x;height: 88px;">
+    <% include top.html %>
+</div>
+
+<div style="background:#f0f9fd;width: 187px;float: left;">
+    <% include left.html %>
+</div>
+
+<div class="place">
+    <span>位置：</span>
+    <ul class="placeul">
+        <li><a href="#">首页</a></li>
+        <li><a href="#">数据表</a></li>
+        <li>><a href="#">基本内容</a></li>
+    </ul>
+</div>
+
+<div class="rightinfo">
+
+    <!--<div class="tools">-->
+    <!--<ul class="toolbar">-->
+    <!--<li><a href="#add" data-toggle="tab"><span><img src="/static/img/t01.png"/></span>ADD</a></li>-->
+    <!--<li><span><img src="/static/img/t02.png"/></span>UPDATE</li>-->
+    <!--<li><span><img src="/static/img/t03.png"/></span>DELETE</li>-->
+    <!--<li><a href="#read" data-toggle="tab"><span><img src="/static/img/t04.png"/></span>READ</a></li>-->
+    <!--</ul>-->
+    <!--</div>-->
+    <div id="Tab1">
+        <div class="Menubox">
+            <ul>
+                <li id="one1" onclick="setTab('one',1,4)" class="hover">ADD</li>
+                <li id="one2" onclick="setTab('one',2,4)">READ</li>
+                <!--<li id="one3" onclick="setTab('one',3,4)">新闻3</li>-->
+                <!--<li id="one4" onclick="setTab('one',4,4)">新闻4</li>-->
+            </ul>
+        </div>
+        <div class="Contentbox">
+            <div id="con_one_1" class="hover">
+                <form method="post" id="addBookForm">
+                    <table class="tablelist" id="tablelist1">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>ISBN</th>
+                            <th>Book Name</th>
+                            <th>Edition</th>
+                            <th>Category ID</th>
+                            <th>Description</th>
+                            <th>Book type</th>
+                            <th>Author</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td></td>
+                            <td><input name="ISBN_0" type="text" placeholder="BookID"></td>
+                            <td><input name="title_0" type="text" placeholder="Book Name"></td>
+                            <td><input name="edition_0" type="text" placeholder="Edition"></td>
+                            <td><input name="cat_id_0" type="text" placeholder="Category ID"></td>
+                            <td><input name="description_0" type="text" placeholder="Description"></td>
+                            <td><input name="book_type_0" type="text" placeholder="Book type"></td>
+                            <td><input name="author_0" type="text" placeholder="Author"></td>
+                            <!--<td><a href="#" class="tablelink">查看</a> <a href="#" class="tablelink"> 删除</a></td>-->
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="addOneButton">
+                        <input name="" type="button" class="addOneTr" value="ADD ONE"/>&nbsp;
+                        <input name="" type="button" class="deleteOneTr" value="DELETE ONE"/>&nbsp;
+                        <input name="" id="addBook" type="button" class="sure" value="ADD BOOK"/>&nbsp;
+                        <!--<input name="" type="button" class="cancel" value="取消"/>-->
+                    </div>
+                </form>
+            </div>
+            <div id="con_one_2" style="display:none">
+                <div>
+                    <select class="select">
+                        <option selected>ISBN</option>
+                        <option>Title</option>
+                        <option>Edition</option>
+                        <option>cat_id</option>
+                        <option>description</option>
+                        <option>book_type</option>
+                        <option>author</option>
+                    </select>
+                    <input id="bookSearch" class="bookSearch" type="text" name="search_info" placeholder="Search">
+                    <input name="" id="read" type="button" class="SearchButton" value="FIND"/>&nbsp;
+                </div>
+                <form method="post" id="ReadAndUpdate">
+                    <table class="tablelist" id="readTable">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>ISBN</th>
+                            <th>Book Name</th>
+                            <th>Edition</th>
+                            <th>Category ID</th>
+                            <th>Description</th>
+                            <th>Book type</th>
+                            <th>Author</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <!--<tr>-->
+                        <!--<td></td>-->
+                        <!--<td><input name="ISBN_0" type="text" placeholder="BookID"></td>-->
+                        <!--<td><input name="title_0" type="text" placeholder="Book Name"></td>-->
+                        <!--<td><input name="edition_0" type="text" placeholder="Edition"></td>-->
+                        <!--<td><input name="cat_id_0" type="text" placeholder="Category ID"></td>-->
+                        <!--<td><input name="description_0" type="text" placeholder="Description"></td>-->
+                        <!--<td><input name="book_type_0" type="text" placeholder="Book type"></td>-->
+                        <!--<td><input name="author_0" type="text" placeholder="Author"></td>-->
+                        <!--<td><a href="#" class="tablelink">查看</a> <a href="#" class="tablelink"> 删除</a></td>-->
+                        <!--</tr>-->
+                        </tbody>
+                    </table>
+                    <div class="addOneButton">
+                        <input name="" type="button" class="deleteOneTr" value="UPDATE"/>&nbsp;
+                        <!--<input name="" type="button" class="sure" value="ADD BOOK"/>&nbsp;-->
+                        <!--<input name="" type="button" class="cancel" value="取消"/>-->
+                    </div>
+                </form>
+            </div>
+            <!--<div id="con_one_3" style="display:none">新闻列表3</div>-->
+            <!--<div id="con_one_4" style="display:none">新闻列表4</div>-->
+        </div>
+    </div>
+
+
+    <!--弹出框-->
+    <div class="tip">
+        <div class="tiptop"><span>Check</span><a></a></div>
+
+        <div class="tipinfo">
+            <!--<span><img src="/static/img/ticon.png"/></span>-->
+
+            <div class="tipright">
+                <p>New Books Add Successfully!</p>
+                <cite>Congratulation!</cite>
+            </div>
+        </div>
+
+        <div class="tipbtn">
+            <input name="" type="button" class="sure" value="OK"/>&nbsp;
+            <!--<input name="" type="button" class="cancel" value="取消"/>-->
+        </div>
+
+    </div>
+
+
+</div>
+
+<script type="text/javascript">
+    let number = 1;
+    $('.tablelist tbody tr:odd').addClass('odd');
+    $('.addOneTr').click(function () {
+        if ($('#tablelist1 tr:eq(6)').size()) {
+            alert("Can not add more than 6!");
+        } else {
+            var tr = "<tr>" +
+                    "<td></td>" +
+                    "<td><input name='ISBN_" + number + "' type='text' placeholder='BookID'></td>" +
+                    "<td><input name='title_" + number + "' type='text' placeholder='Book Name'></td>" +
+                    "<td><input name='edition_" + number + "' type='text' placeholder='Edition'></td>" +
+                    "<td><input name='cat_id_" + number + "' type='text' placeholder='Category ID'></td>" +
+                    "<td><input name='description_" + number + "' type='text' placeholder='Description'></td>" +
+                    "<td><input name='book_type_" + number + "' type='text' placeholder='Book type'></td>" +
+                    "<td><input name='author_" + number + "' type='text' placeholder='Author'></td>" +
+                    "</tr>";
+            $('#tablelist1 tr:last').after(tr);
+            number++;
+        }
+    });
+    $('.deleteOneTr').click(function () {
+        $('.tablelist tr:last').remove();
+        number--;
+    });
+    $('#addBook').click(function () {
+        let data = $('#addBookForm').serialize();
+//        console.log(data);
+//        data= JSON.stringify(data);
+//        data.number = number;
+//        Object.assign(data,{number: number});
+//        let numberObj = {number: number};
+//        let obj = Object.assign(data, numberObj);
+        $.ajax({
+            type: "post",
+            url: "/index/addbook",
+            data: data,
+            success: function (msg) {
+                switch (msg.data) {
+                    case 1:
+                        $(".tip").fadeIn(200);
+                        break;
+                    case -1:
+                        alert("error!");
+                        break;
+                    case -2:
+                        alert("ISBN is already exist!");
+                        break;
+                }
+            }
+        })
+    });
+    $('#read').click(function () {
+        let searchInput = document.getElementById("bookSearch");
+        if(searchInput.value == ""){
+            alert("Can not be blank!");
+        }else{
+//            let hadRead = $('#readTable tbody tr').length;
+//            console.log(hadRead);
+//            if(hadRead){
+//                var table= document.getElementById("readTable");
+//                var tbodies = table.getElementsByTagName("tbody");
+//                for( var i=0;i < tbodies.length;i++){
+//                    if(tbodies[i].id=='tid'){
+//                        $('#readTable tbody').removeChild(tbodies[i]);
+//                    }
+//                }
+//            }else{
+                let search_input = $('#bookSearch').val();
+                let select_item = $('.select option:selected').val();
+                let data = {};
+                data[select_item] = search_input;
+                $.ajax({
+                    type: "post",
+                    url: "/index/readbookdetail",
+                    data: data,
+                    success: function(msg){
+                        var arr = [];
+                        for(var index in msg){
+                            for(let index1 in msg[index]){
+//                            console.log(msg[index][index1]);
+                                for(var item in msg[index][index1]){
+                                    arr.push(msg[index][index1][item]);
+                                }
+                            }
+                        }
+                        let arrLen = arr.length;
+                        let arrayNumber = (arrLen/7);
+                        while(arrayNumber){
+                            var tr = "<tr>" +
+                                    "<td></td>" +
+                                    "<td><input name='ISBN_" + arrayNumber + "' type='text' value='"+arr[(arrLen-(7 * arrayNumber))]+"'></td>" +
+                                    "<td><input name='title_" + arrayNumber + "' type='text' value='"+arr[(arrLen-(7 * arrayNumber))+1]+"'></td>" +
+                                    "<td><input name='edition_" + arrayNumber + "' type='text' value='"+arr[(arrLen-(7 * arrayNumber))+2]+"'></td>" +
+                                    "<td><input name='cat_id_" + arrayNumber + "' type='text' value='"+arr[(arrLen-(7 * arrayNumber))+3]+"'></td>" +
+                                    "<td><input name='description_" + arrayNumber + "' type='text' value='"+arr[(arrLen-(7 * arrayNumber))+4]+"'></td>" +
+                                    "<td><input name='book_type_" + arrayNumber + "' type='text' value='"+arr[(arrLen-(7 * arrayNumber))+5]+"'></td>" +
+                                    "<td><input name='author_" + arrayNumber + "' type='text' value='"+arr[(arrLen-(7 * arrayNumber))+6]+"'></td>" +
+                                    "<td><a href='#' id='delete_data_"+ arrayNumber +"' class='tablelink'>DELETE</a></td>" +
+                                    "</tr>";
+                            $('#readTable tbody').append(tr);
+                            arrayNumber--;
+                        }
+//                    console.log(arr[13]);
+                    }
+                });
+//            }
+        }
+    })
+    $('#delete')
+</script>
+<script>
+    <!--
+    function setTab(name, cursel, n) {
+        for (var i = 1; i <= n; i++) {
+            var menu = document.getElementById(name + i);
+            var con = document.getElementById("con_" + name + "_" + i);
+            menu.className = i == cursel ? "hover" : null;
+            con.style.display = i == cursel ? "block" : "none";
+        }
+    }
+    //-->
+    //        $(function(){
+    //            let input = document.getElementsByTagName("");
+    //            if(input == ""){
+    //                alert("input can not be null!");
+    //            }
+    //        })
+</script>
+
+</body>
+
+</html>

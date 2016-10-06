@@ -1,0 +1,186 @@
+<% include header.html %>
+<body>
+<% include topbar.html %>
+
+<!--Login Modal-->
+<% include loginModal.html %>
+<!--Register Modal-->
+<% include registerModal.html %>
+
+<div id="myCarousel" class="carousel slide">
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="item active" style="background:#223240">
+            <img src="/static/user/img/slide1.jpg" alt="第一张">
+        </div>
+        <div class="item" style="background:#F5E4DC;">
+            <img src="/static/user/img/slide2.jpg" alt="第二张">
+        </div>
+        <div class="item" style="background:#F5E4DC;">
+            <img src="/static/user/img/slide3.jpg" alt="第三张">
+        </div>
+        <!-- 		<div style="background:#eee;">
+                    <img src="img/slide.png" alt="第三张">
+                </div> -->
+    </div>
+    <a href="#myCarousel" data-slide="prev" class="carousel-control left">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a href="#myCarousel" data-slide="next" class="carousel-control right">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+</div>
+
+
+<div class="tab1">
+    <div class="container">
+        <h2 class="tab-h2">「 Mini Eyes Library 」</h2>
+        <p class="tab-p">Experience Teacher and perfect practice class.</p>
+        <div class="row">
+            <div class="col-md-6 col">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#"><img src="/static/user/img/tab1-1.png" class="media-object" alt="1"></a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">Course</h4>
+                        <p class="text-muted">Others：Books has no evaluate to use!</p>
+                        <p>Us：Well-known businessman write the Good Book!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#"><img src="/static/user/img/tab1-2.png" class="media-object" alt="2"></a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">Teacher</h4>
+                        <p class="text-muted">Others: Unknown Teacher from small village!</p>
+                        <p>Us: Well-known Teacher from all over the world!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#"><img src="/static/user/img/tab1-3.png" class="media-object" alt="3"></a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">Arrangement</h4>
+                        <p class="text-muted">Others: Low efficient.</p>
+                        <p>Us: Ensure the time to study!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#"><img src="/static/user/img/tab1-4.png" class="media-object" alt="4"></a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">Team work</h4>
+                        <p class="text-muted">Others: Normal workers. </p>
+                        <p>Us: High-Classic level workers all like family</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tab2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6 tab2-img">
+                <img src="/static/user/img/tab2.png" class="auto img-responsive center-block" alt="12">
+            </div>
+            <div class="text col-md-6 col-sm-6 tab2-text">
+                <h3>Stronger manage system</h3>
+                <p>Administrator take charge of your study. You will improve.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tab3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <img src="/static/user/img/tab3.png" class="auto img-responsive center-block" alt="13">
+            </div>
+            <div class="text col-md-6 col-sm-6">
+                <h3>Perfect skills</h3>
+                <p>Most useful and efficient skills that will teach you.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        $('#login-submit').click(function (){
+            var data = $('#login').serialize();
+            $.ajax({
+                url: "/user/index/login",
+                type: "post",
+                data: data,
+                success: function(msg){
+                    console.log(msg);
+                    switch (msg.data){
+                        case 1:
+                            location.reload(true);
+                            break;
+                        case -1:
+                            alert("User not exist!");
+                            break;
+                        case -2:
+                            alert("password not correct!");
+                            break;
+                    }
+//                    location.reload(true);
+                }
+            });
+        });
+        $('#register-submit').click(function(){
+            var data = $('#register').serialize();
+            $.ajax({
+                type: "post",
+                url: "/user/index/register",
+                data: data,
+                success: function(msg){
+                    console.log(msg);
+                    switch(msg.data){
+                        case 1:
+                            location.reload(true);
+                            break;
+                        case -1:
+                            alert("用户昵称不能为空！");
+                            break;
+                        case -2:
+                            alert("用户昵称已存在，请重新填写！");
+                            break;
+                        case -3:
+                            alert("密码不能为空！");
+                            break;
+                        case -4:
+                            alert("两次输入的密码不一致，请重新填写！");
+                            break;
+                    }
+//                    location.reload(true);
+                }
+            })
+        });
+    });
+    //轮播自动播放
+    $('#myCarousel').carousel({
+        interval : 4000
+    });
+</script>
+<!--footer-->
+<% include footer.html %>

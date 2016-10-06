@@ -8,21 +8,21 @@ export default class extends think.controller.base {
     super.init(http);
   }
 
-  * __before() {
-    this.islogin = yield this.is_login();//返回用户是否登录true or false
-    this.user = yield this.session('loginlib');//获取缓存文件
+  async __before() {
+    this.islogin = await this.is_login();//返回用户是否登录true or false
+    this.user = await this.session('loginuser');//获取缓存文件
   }
 
-  * is_login() {
+  async is_login() {
     //前台判断是否登录
-    let user = yield this.session('loginlib');
+    let user = await this.session('loginuser');
     let res = think.isEmpty(user) ? false : user;
     //console.log(res);
     return res;
   }
 
-  * weblogin() {
-    let islogin = yield this.is_login();
+  async weblogin() {
+    let islogin = await this.is_login();
     if (!islogin) {//未登录
       //pc端跳转到错误页面
       return think.statusAction(404, this.http);

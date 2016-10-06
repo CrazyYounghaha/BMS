@@ -487,9 +487,10 @@ h2 {
     cursor: pointer;
 }
 
-/*right.html*/
+/*index_right.html*/
 .place {
     height: 40px;
+    width: 1220px;
     background: url(../img/righttop.gif) repeat-x;
 }
 
@@ -514,6 +515,61 @@ h2 {
 
 .rightinfo {
     padding: 8px;
+    float: left;
+    width: 815px;
+}
+
+#Tab1 {
+    width: 800px;
+    margin: 0px;
+    padding: 1px;
+    margin: 0 auto;
+}
+
+.Menubox {
+    width: 100%;
+    /*background:url(http://www.hxcgw.com/bbs/upfile/20079299441652.gif);*/
+    height: 28px;
+    line-height: 28px;
+}
+
+.Menubox ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.Menubox li {
+    float: left;
+    display: block;
+    cursor: pointer;
+    width: 114px;
+    text-align: center;
+    color: #949694;
+    font-weight: bold;
+}
+
+.Menubox li.hover {
+    padding: 0px;
+    background: #fff;
+    width: 116px;
+    border-left: 1px solid #A8C29F;
+    border-top: 1px solid #A8C29F;
+    border-right: 1px solid #A8C29F;
+    /*background:url(http://www.hxcgw.com/bbs/upfile/200792994426548.gif);*/
+    color: black;
+    font-weight: bold;
+    height: 27px;
+    line-height: 27px;
+}
+
+.Contentbox {
+    clear: both;
+    margin-top: 0px;
+    border: 1px solid #ffffff;
+    border-top: none;
+    height: 181px;
+    text-align: center;
+    padding-top: 8px;
 }
 
 .tools {
@@ -575,6 +631,23 @@ h2 {
     clear: both;
 }
 
+.tablelist .wait{
+font-style: normal;
+color: orange;
+}
+.tablelist .ing{
+font-style: normal;
+color: purple;
+}
+.tablelist .ret{
+    font-style: normal;
+    color: black;
+}
+.tablelist .over{
+    font-style: normal;
+    color: red;
+}
+
 .tablelist th {
     background: url(../img/th.gif) repeat-x;
     height: 34px;
@@ -586,8 +659,13 @@ h2 {
 
 .tablelist td {
     line-height: 35px;
-    text-indent: 11px;
+    text-indent: 9px;
     border-right: dotted 1px #c7c7c7;
+    height: 50px;
+}
+.tablelist td i {
+    font-style: normal;
+    color: #ea2020;
 }
 
 .tablelink {
@@ -600,6 +678,40 @@ h2 {
 
 .tablelist tbody tr:hover {
     background: #e5ebee;
+}
+
+.tablelist tbody td input {
+    height: 30px;
+    padding: 1px;
+}
+
+.select {
+    padding: 5px;
+    background: transparent;
+    width: 200px;
+    font-size: 16px;
+    border: 1px solid;
+    height: 30px;
+}
+
+.bookSearch {
+    height: 30px;
+    border: 1px solid;
+    font-size: 16px;
+    width: 200px;
+}
+
+.addOneButton {
+    display: block;
+    bottom: 50px;
+    right: 1px !important;
+    right: 18px;
+    width: 500px;
+    line-height: 30px;
+    position: fixed;
+    border: 1px solid #fff;
+    text-align: center;
+    color: #fff;
 }
 
 .sort {
@@ -1097,6 +1209,42 @@ h2 {
     line-height: 35px;
     color: #fff;
     background: url(../img/btnbg1.png) repeat-x;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.addOneTr {
+    width: 96px;
+    height: 35px;
+    line-height: 35px;
+    color: #fff;
+    background: green;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.SearchButton {
+    width: 96px;
+    height: 35px;
+    line-height: 35px;
+    color: #fff;
+    background: green;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.deleteOneTr {
+    width: 96px;
+    height: 35px;
+    line-height: 35px;
+    color: #fff;
+    background: darkred;
     font-size: 14px;
     font-weight: bold;
     border-radius: 3px;
