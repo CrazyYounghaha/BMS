@@ -152,4 +152,9 @@ export default class extends Base {
 						return this.success({ISBN: data.ISBN, userID: this.user.id});
 				}
 		}
+
+		returnbookAction(){
+				this.assign("title", "Borrow Book Page");
+				return this.display();
+		}
 }
