@@ -17,9 +17,12 @@
                 <dd><a href="#"><img src="/static/user/img/vip1.png" alt="book"/></a></dd>
                 <dt>
                 <p class="book_title">VIP1</p>
-
-                <!--<p class="book_inline"> Erika Hall</p>-->
-                <a class="book_buy" href="#" data-toggle="modal" data-target="#confirmBorrow">apply</a>
+                <p class="book_inline">Not a normal user</p>
+                <% if(MemberStyle == 'VIP' || IssDetail == 0) { %>
+                <button class="book_buy" type="button" disabled data-toggle="modal" data-target="#confirmBorrow">apply</button>
+                <% } else { %>
+                <button class="book_buy" href="#" data-toggle="modal" data-target="#confirmBorrow">apply</button>
+                <% } %>
                 </dt>
             </dl>
         </li>
@@ -29,8 +32,12 @@
                 <dt>
                 <p class="book_title">VIP2</p>
 
-                <!--<p class="book_inline"> Karen McGrane</p>-->
-                <a class="book_buy" href="#" data-toggle="modal" data-target="#confirmBorrow">apply</a>
+                <p class="book_inline">Borrow more than 4 books</p>
+                <% if(MemberStyle == 'VIP' || IssDetail == 0) { %>
+                <button class="book_buy" type="button" disabled data-toggle="modal" data-target="#confirmBorrow">apply</button>
+                <% } else { %>
+                <button class="book_buy" href="#" data-toggle="modal" data-target="#confirmBorrow">apply</button>
+                <% } %>
                 </dt>
             </dl>
         </li>
@@ -40,25 +47,36 @@
                 <dt>
                 <p class="book_title">VIP3</p>
 
-                <!--<p class="book_inline"> Mike Monteiro</p>-->
-                <a class="book_buy" href="#" data-toggle="modal" data-target="#confirmBorrow">apply</a>
+                <p class="book_inline"> U can download PDF</p>
+                <% if(MemberStyle == 'VIP' || IssDetail == 0) { %>
+                <button class="book_buy" type="button" disabled data-toggle="modal" data-target="#confirmBorrow">apply</button>
+                <% } else { %>
+                <button class="book_buy" href="#" data-toggle="modal" data-target="#confirmBorrow">apply</button>
+                <% } %>
                 </dt>
             </dl>
         </li>
     </ul>
 </div>
-
+<script src="/socket.io/socket.io.js"></script>
 <script>
-//    $('.book_buy').click(function () {
-//        let data = $(this).siblings("p").html();
-////        console.log(data);
-//        $.ajax({
-//            type: "post",
-//            url: "",
-//            data: {Title: data},
-//            success: function(msg){
-//                console.log(msg);
-//            }
-//        })
-//    });
+    $(function(){
+        var socket = io('http://localhost:8360');
+        $('.book_buy').click(function () {
+//        let data = $(this).siblings()[1].innerHTML;
+//        console.log(data);
+            var buttonClick = $(this);
+            $.ajax({//提交更新到数据库
+                url: "/user/member/applyvip",
+                success: function(msg){
+                    $('.book_buy').attr("disabled",true);
+                    console.log(msg.data);
+                    socket.emit('confirmvip',msg.data);
+                    socket.on('to'+msg.data, function(data){
+                        console.log(data);
+                    });
+                }
+            });
+        });
+    })
 </script>

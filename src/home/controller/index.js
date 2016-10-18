@@ -142,20 +142,70 @@ export default class extends Base {
 				return this.display();
 		}
 
-		* confirmAction(){
+		* confirmAction(self){
 				if(this.isPost()){
 						let data = this.post();
-						let book = yield this.model("Issuance").where({ ISBN: data.bookID}).update({book_status: 2});
-						if(think.isEmpty(book)){
+						if(data.judge){//agree to borrow
+								yield this.model("Issuance").where({ ISBN: data.bookID}).update({book_status: 2});
+								yield this.model("Issuance_detail").where({ book_id: data.bookID}).update({book_status: 2});
+								let book = yield this.model("Issuance").where({ISBN: data.bookID}).find();
+								//console.log(data.bookID);
+								//console.log(book.mem_id);
+								global[book.mem_id].emit('to'+data.bookID,"agree");
 								return this.success(1);
 						}else {
+								let book = yield this.model("Issuance").where({ISBN: data.bookID}).find();
+								let userId = book.mem_id;
+								yield this.model("Issuance").where({ ISBN: data.bookID}).delete();
+								yield this.model("Issuance_detail").where({book_id: data.bookID}).update({book_status: 3});
+								//console.log(data.bookID);
+								//console.log(userId);
+								global[userId].emit('to'+data.bookID,"disagree");
 								return this.success(-1);
+						}
+				}else{
+						//console.log("11111111");
+						var socket = self.http.socket;
+						var getData = self.http.data;
+						if (getData in global) {
+								global[getData] = socket;
+						} else {
+								global[getData] = socket;
 						}
 				}
 		}
 
-		imgtableAction() {
+		* imgtableAction() {
+				let VIP_iss = yield this.model('Issuance_VIP').select();
+				this.assign("VIP",VIP_iss);
 				return this.display();
+		}
+
+		* confirmvipAction(self){
+				if(this.isPost()){
+						let data = this.post();
+						if(data.judge){//通过vip申请
+								yield this.model('Member').where({mem_id: data.userID}).update({mem_style: "VIP"});
+								yield this.model('Issuance_VIP').where({mem_id: data.userID}).update({status: 1});
+								//返回消息给用户
+								global[data.userID].emit('to'+data.userID,"agree");
+								return this.success(1);
+						}else {
+								yield this.model('Issuance_VIP').where({mem_id: data.userID}).delete();
+								//返回消息给用户
+								global[data.userID].emit('to'+data.userID,"disagree");
+								return this.success(-1);
+						}
+				}
+				 else {
+						var socket = self.http.socket;
+						var getData = self.http.data;
+						if (getData in global) {
+								global[getData] = socket;
+						} else {
+								global[getData] = socket;
+						}
+				}
 		}
 
 		formAction() {

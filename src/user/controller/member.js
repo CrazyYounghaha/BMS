@@ -43,6 +43,25 @@ export default class extends Base {
 		* identityAction(){
 				this.assign("title","personal");
 				yield this.weblogin();
+				let userInfo = yield this.model("Member").where({mem_id: this.user.id}).find();
+				let appInfo = yield this.model("Issuance_VIP").where({mem_id: this.user.id}).find();
+				//console.log(userInfo);
+				this.assign("MemberStyle", userInfo.mem_style);
+				if(appInfo.status){
+						this.assign("IssDetail", appInfo.status);
+				}else{
+						this.assign("IssDetail", 1);
+				}
 				return this.display();
+		}
+		* applyvipAction(){
+				if(this.isGet()) {//提交VIP申请，数据库插入该条数据
+						yield this.model("Issuance_VIP").add({
+								mem_id: this.user.id,
+								apply_date: dateformat("Y-m-d", Date()),
+								status: 0
+						});
+						return this.success(this.user.id);//申请提交完毕
+				}
 		}
 }
