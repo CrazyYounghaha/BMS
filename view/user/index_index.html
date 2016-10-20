@@ -6,6 +6,10 @@
 <% include loginModal.html %>
 <!--Register Modal-->
 <% include registerModal.html %>
+<!--alertModal-->
+<% if (checkBooks) { %>
+<% include alertModal.html %>
+<% } %>
 
 <div id="myCarousel" class="carousel slide">
     <ol class="carousel-indicators">

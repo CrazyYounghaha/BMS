@@ -7,16 +7,36 @@ export default class extends Base {
 		 * index action
 		 * @return {Promise} []
 		 */
-		indexAction() {
+		* indexAction() {
 				//auto render template file index_index.html
-				this.assign("title", "Mini Eyes");
-				return this.display();
+				if (yield this.is_login()) {
+						//检查该用户有没有超过时间没有还的书
+						let issue_date = yield this.model('Issuance').where({mem_id: this.user.id}).select();
+						//console.log(issue_date);
+						let newArray = [];
+						let date = dateformat("Y-m-d",Date());
+						for (let index in issue_date) {
+								let days = getDays(issue_date[index].issue_date, date);
+								if ( days > 7){
+										newArray.push(issue_date[index].ISBN);
+								}
+						}
+						this.assign("checkBooks", newArray);
+						this.assign("title", "Mini Eyes");
+						//delete global.hadLogin;
+						return this.display();
+				} else {
+						this.assign("title", "Mini Eyes");
+						this.assign("checkBooks", 0);
+						return this.display();
+				}
+
 		}
 
 		* loginAction() {
 				if (this.isPost()) {
 						let data = this.post();
-						console.log(data);
+						//console.log(data);
 						data.pwd = encryptPassword(data.pwd);
 						data.login_time = new Date().valueOf();
 						let user = yield this.model('Member_login').where({mem_name: data.name}).find();
@@ -32,6 +52,8 @@ export default class extends Base {
 												'last_login_time': data.login_time
 										};
 										yield this.session('loginuser', userInfo);
+										//登陆过后添加global一个属性
+										//global.hadLogin = 1;
 										return this.success(1);
 								} else {
 										console.log("password error");
@@ -111,22 +133,22 @@ export default class extends Base {
 		}
 
 		* checkAction() {
-				if(this.isPost()){
+				if (this.isPost()) {
 						let member = yield this.model('Member').where({mem_id: this.user.id}).find();
-						if(member.mem_style == "normal"){
+						if (member.mem_style == "normal") {
 								let number = yield this.model('Issuance').where({mem_id: this.user.id}).count();
 								console.log(number);
-								if(number >= 4){
+								if (number >= 4) {
 										return this.success(-1);
-								}else {
+								} else {
 										return this.success(1);
 								}
-						}else {
+						} else {
 								let number = yield this.model('Issuance').where({mem_id: this.user.id}).count();
 								console.log(number);
-								if(number >= 10){
+								if (number >= 10) {
 										return this.success(-1);
-								}else {
+								} else {
 										return this.success(1);
 								}
 						}
@@ -153,8 +175,44 @@ export default class extends Base {
 				}
 		}
 
-		returnbookAction(){
-				this.assign("title", "Borrow Book Page");
+		* returnbookAction() {
+				let returnBook = yield this.model('Issuance').join({
+						table: "Issuance_detail",
+						join: "left",
+						on: ["ISBN", "book_id"]
+				}).join({
+						table: "Books",
+						join: "left",
+						on: ["ISBN", "ISBN"]
+				}).where({mem_id: this.user.id}).select();
+				//console.log(returnBook);
+				this.assign("title", "Return Book Page");
+				this.assign("books", returnBook);
 				return this.display();
+		}
+
+		* backbookAction() {
+				if (this.isPost()) {
+						let data = this.post();
+						data.return_date = dateformat("Y-m-d", Date());
+						data.fine = 0;
+						//	console.log(data.return_date);
+						let days = getDays(data.bor_date, data.return_date);
+						//	console.log(days);
+						if (days >= 7 && days < 14) {//七天内
+								data.fine = 50;
+						} else if (days >= 14) {//超过14天的
+								data.fine = 50 + (days - 7) * 5;
+						}
+						yield this.model("Issuance").where({ISBN: data.bookID}).delete();
+						yield this.model("Issuance_detail").where({book_id: data.bookID}).update({book_status: 3});
+						yield this.model("Receiving_Detail").add({
+								book_id: data.bookID,
+								fine: data.fine,
+								return_date: data.return_date,
+								return_by: this.user.id
+						});
+						return this.success(data.fine);
+				}
 		}
 }
